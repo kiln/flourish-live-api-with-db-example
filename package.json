@@ -1,0 +1,19 @@
+{
+  "name": "flourish-live-api-with-db-example",
+  "version": "0.0.1",
+  "description": "An example of using the Flourish API pulling data from a SQLite database",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Flourish team",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "http-proxy-middleware": "^2.0.6",
+    "sqlite3": "^5.0.8"
+  }
+}

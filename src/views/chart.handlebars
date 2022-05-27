@@ -1,0 +1,46 @@
+<!doctype HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Flourish Live API Example</title>
+	</head>
+	<body>
+		<!--
+			This is the container for the chart. The data-chart-data attribute
+			will be populated with the data fetched from the database.
+		-->
+		<div class="chart-container" data-chart-data="{{ data }}"></div>
+		<!-- Load the latest version of the Flourish API -->
+		<script src="https://cdn.flourish.rocks/flourish-live-v4.5.0.min.js"></script>
+		<script>
+			// Convert the data-chart-data attribute (which contains JSON data) to
+			// a JavaScript object
+			const data = JSON.parse(document.querySelector(".chart-container").dataset.chartData);
+
+			// Render the data using the Flourish Live API
+			new Flourish.Live({
+				// Send the request via the /flourish endpoint. This will add the
+				// API key, then forward the request on to the Flourish API.
+				api_url: "/flourish",
+				// This will be filled in on the server-side
+				api_key: "",
+				template: "@flourish/bar-chart-race",
+				version: "14",
+				container: ".chart-container",
+				data: {
+					data
+				},
+				bindings: {
+					data: {
+						// Country name is in column 0
+						label: "name",
+						// Values are the columns with a year as the heading
+						values: Object.keys(data[0] || {})
+							.filter(columnName => /^[0-9]{4}$/.test(columnName))
+							.sort()
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
