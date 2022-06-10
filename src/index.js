@@ -23,6 +23,23 @@ app.engine("handlebars", expressHandlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "views"));
 
+// The home page
+// Lists the different variations of the visualisation which you can view
+app.get("/", (req, res) => {
+	// Fetch a list of regions from the database
+	const data = db.all(`
+		select * from region
+	`, (err, regions) => {
+		// Render the template in src/views/home.handlebars, passing in the data
+		// fetched from the database.
+		res.render("home", {
+			regions
+		});
+	});
+});
+
+// The visualisation pages
+// Displays the visualisation with data for a particular region
 app.get("/:region", (req, res) => {
 	// Fetch the data from the database
 	const data = db.all(`
